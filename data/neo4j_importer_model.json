@@ -1,0 +1,398 @@
+{
+  "version": "0.1.2-beta.5",
+  "graph": {
+    "nodes": [
+      {
+        "id": "n0",
+        "position": {
+          "x": -186.00021770098908,
+          "y": -279.5
+        },
+        "caption": "Book"
+      },
+      {
+        "id": "n1",
+        "position": {
+          "x": 106.49978229901092,
+          "y": -279.5
+        },
+        "caption": "Subject"
+      },
+      {
+        "id": "n2",
+        "position": {
+          "x": -133.1695342061156,
+          "y": 8.189361780140416
+        },
+        "caption": "Author"
+      },
+      {
+        "id": "n3",
+        "position": {
+          "x": -64.33863301025303,
+          "y": -545.4975729410681
+        },
+        "caption": "Publisher"
+      }
+    ],
+    "relationships": [
+      {
+        "id": "n0",
+        "type": "ABOUT_SUBJECT",
+        "fromId": "n0",
+        "toId": "n1"
+      },
+      {
+        "id": "n1",
+        "type": "WROTE",
+        "fromId": "n2",
+        "toId": "n0"
+      },
+      {
+        "id": "n2",
+        "type": "PUBLISHED_BY",
+        "fromId": "n0",
+        "toId": "n3"
+      }
+    ]
+  },
+  "dataModel": {
+    "fileModel": {
+      "fileSchemas": {
+        "books.csv": {
+          "expanded": true,
+          "fields": [
+            {
+              "name": "isbn",
+              "type": "string",
+              "sample": "9780593334836",
+              "include": true
+            },
+            {
+              "name": "title",
+              "type": "string",
+              "sample": "Book Lovers",
+              "include": true
+            },
+            {
+              "name": "subtitle",
+              "type": "string",
+              "sample": "",
+              "include": true
+            },
+            {
+              "name": "description",
+              "type": "string",
+              "sample": "While on vacation in North Carolina, a literary agent keeps running into an editor.",
+              "include": true
+            },
+            {
+              "name": "authors",
+              "type": "string",
+              "sample": "Emily Henry",
+              "include": true
+            },
+            {
+              "name": "subjects",
+              "type": "string",
+              "sample": "nyt:combined-print-and-e-book-fiction=2022-05-22;New York Times bestseller",
+              "include": true
+            },
+            {
+              "name": "publisher",
+              "type": "string",
+              "sample": "Penguin Publishing Group",
+              "include": true
+            },
+            {
+              "name": "publish_date",
+              "type": "string",
+              "sample": "2022",
+              "include": true
+            },
+            {
+              "name": "cover",
+              "type": "string",
+              "sample": "https://covers.openlibrary.org/b/id/12738706-L.jpg",
+              "include": true
+            }
+          ]
+        },
+        "publishers.csv": {
+          "expanded": true,
+          "fields": [
+            {
+              "name": "publisher",
+              "type": "string",
+              "sample": "Penguin Publishing Group",
+              "include": true
+            },
+            {
+              "name": "isbn",
+              "type": "string",
+              "sample": "9780593334836",
+              "include": true
+            }
+          ]
+        },
+        "authors.csv": {
+          "expanded": true,
+          "fields": [
+            {
+              "name": "author",
+              "type": "string",
+              "sample": "Emily Henry",
+              "include": true
+            },
+            {
+              "name": "isbn",
+              "type": "string",
+              "sample": "9780593334836",
+              "include": true
+            }
+          ]
+        },
+        "subjects.csv": {
+          "expanded": true,
+          "fields": [
+            {
+              "name": "subject",
+              "type": "string",
+              "sample": "nyt:combined-print-and-e-book-fiction=2022-05-22",
+              "include": true
+            },
+            {
+              "name": "isbn",
+              "type": "string",
+              "sample": "9780593334836",
+              "include": true
+            }
+          ]
+        }
+      }
+    },
+    "graphModel": {
+      "nodeSchemas": {
+        "n0": {
+          "label": "Book",
+          "additionLabels": [],
+          "labelProperties": [],
+          "properties": [
+            {
+              "property": "isbn",
+              "type": "string",
+              "identifier": "7c5b2d55-39cc-4cb9-87b9-556f086bd0d8"
+            },
+            {
+              "property": "title",
+              "type": "string",
+              "identifier": "d010fe0a-d273-4844-9cfa-7f12ac4a3669"
+            },
+            {
+              "property": "publish_date",
+              "type": "string",
+              "identifier": "084e2282-2193-452e-a320-4b7857601878"
+            },
+            {
+              "property": "cover",
+              "type": "string",
+              "identifier": "35eb3bd1-60ba-49c6-9214-928e30071ea7"
+            },
+            {
+              "property": "subtitle",
+              "type": "string",
+              "identifier": "43ccd968-a556-4076-827b-a2fedd92b2f0"
+            },
+            {
+              "property": "description",
+              "type": "string",
+              "identifier": "2fe9b1de-f8b4-4b25-bb69-242ca76f281a"
+            }
+          ],
+          "key": {
+            "properties": [
+              "7c5b2d55-39cc-4cb9-87b9-556f086bd0d8"
+            ],
+            "name": ""
+          }
+        },
+        "n1": {
+          "label": "Subject",
+          "additionLabels": [],
+          "labelProperties": [],
+          "properties": [
+            {
+              "property": "name",
+              "type": "string",
+              "identifier": "dc15651a-3dd8-43f1-a2d2-fe124bacc55b"
+            }
+          ],
+          "key": {
+            "properties": [
+              "dc15651a-3dd8-43f1-a2d2-fe124bacc55b"
+            ],
+            "name": ""
+          }
+        },
+        "n2": {
+          "label": "Author",
+          "additionLabels": [],
+          "labelProperties": [],
+          "properties": [
+            {
+              "property": "name",
+              "type": "string",
+              "identifier": "61c29036-5dfe-4990-b929-ad6c918b0fc4"
+            }
+          ],
+          "key": {
+            "properties": [
+              "61c29036-5dfe-4990-b929-ad6c918b0fc4"
+            ],
+            "name": ""
+          }
+        },
+        "n3": {
+          "label": "Publisher",
+          "additionLabels": [],
+          "labelProperties": [],
+          "properties": [
+            {
+              "property": "name",
+              "type": "string",
+              "identifier": "fe83a9ae-3057-4332-8693-8b75bdbc325d"
+            }
+          ],
+          "key": {
+            "properties": [
+              "fe83a9ae-3057-4332-8693-8b75bdbc325d"
+            ],
+            "name": ""
+          }
+        }
+      },
+      "relationshipSchemas": {
+        "n0": {
+          "type": "ABOUT_SUBJECT",
+          "sourceNodeSchema": "n0",
+          "targetNodeSchema": "n1",
+          "properties": []
+        },
+        "n1": {
+          "type": "WROTE",
+          "sourceNodeSchema": "n2",
+          "targetNodeSchema": "n0",
+          "properties": []
+        },
+        "n2": {
+          "type": "PUBLISHED_BY",
+          "sourceNodeSchema": "n0",
+          "targetNodeSchema": "n3",
+          "properties": []
+        }
+      }
+    },
+    "mappingModel": {
+      "nodeMappings": {
+        "n0": {
+          "nodeSchema": "n0",
+          "fileSchema": "books.csv",
+          "mappings": [
+            {
+              "field": "isbn"
+            },
+            {
+              "field": "title"
+            },
+            {
+              "field": "publish_date"
+            },
+            {
+              "field": "cover"
+            },
+            {
+              "field": "subtitle"
+            },
+            {
+              "field": "description"
+            }
+          ]
+        },
+        "n1": {
+          "nodeSchema": "n1",
+          "fileSchema": "subjects.csv",
+          "mappings": [
+            {
+              "field": "subject"
+            }
+          ]
+        },
+        "n2": {
+          "nodeSchema": "n2",
+          "fileSchema": "authors.csv",
+          "mappings": [
+            {
+              "field": "author"
+            }
+          ]
+        },
+        "n3": {
+          "nodeSchema": "n3",
+          "fileSchema": "publishers.csv",
+          "mappings": [
+            {
+              "field": "publisher"
+            }
+          ]
+        }
+      },
+      "relationshipMappings": {
+        "n0": {
+          "relationshipSchema": "n0",
+          "mappings": [],
+          "sourceMappings": [
+            {
+              "field": "isbn"
+            }
+          ],
+          "targetMappings": [
+            {
+              "field": "subject"
+            }
+          ],
+          "fileSchema": "subjects.csv"
+        },
+        "n1": {
+          "relationshipSchema": "n1",
+          "mappings": [],
+          "sourceMappings": [
+            {
+              "field": "author"
+            }
+          ],
+          "targetMappings": [
+            {
+              "field": "isbn"
+            }
+          ],
+          "fileSchema": "authors.csv"
+        },
+        "n2": {
+          "relationshipSchema": "n2",
+          "mappings": [],
+          "sourceMappings": [
+            {
+              "field": "isbn"
+            }
+          ],
+          "targetMappings": [
+            {
+              "field": "publisher"
+            }
+          ],
+          "fileSchema": "publishers.csv"
+        }
+      }
+    }
+  }
+}
