@@ -13,6 +13,7 @@ type Book {
 	publishedByPublishers: [Publisher!]! @relationship(type: "PUBLISHED_BY", direction: OUT)
 	subtitle: String!
 	title: String!
+  reviews: [Review!]! @relationship(type: "REVIEWS", direction: IN)
 }
 
 type Publisher {
@@ -23,4 +24,32 @@ type Publisher {
 type Subject {
 	booksAboutSubject: [Book!]! @relationship(type: "ABOUT_SUBJECT", direction: IN)
 	name: String!
+}
+
+type Order {
+  orderID: ID! @id
+  placedAt: DateTime @timestamp
+  shipTo: Address @relationship(type: "SHIPS_TO", direction: OUT)
+  customer: Customer @relationship(type: "PLACED", direction: IN)
+  books: [Book!]! @relationship(type: "CONTAINS", direction: OUT)
+}
+
+type Customer {
+  username: String
+  orders: [Order!]! @relationship(type: "PLACED", direction: OUT)
+  reviews: [Review!]! @relationship(type: "WROTE", direction: OUT)
+}
+
+type Address {
+  address: String
+  location: Point
+  orders: [Order!]! @relationship(type: "SHIPS_TO", direction: IN)
+}
+
+type Review {
+  rating: Int
+  text: String
+  createdAt: DateTime @timestamp
+  book: Book! @relationship(type: "REVIEWS", direction: OUT)
+  author: Customer! @relationship(type: "WROTE", direction: IN)
 }
