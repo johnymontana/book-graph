@@ -1,0 +1,26 @@
+type Author {
+	name: String!
+	wroteBooks: [Book!]! @relationship(type: "WROTE", direction: OUT)
+}
+
+type Book {
+	aboutSubjectSubjects: [Subject!]! @relationship(type: "ABOUT_SUBJECT", direction: OUT)
+	authorsWrote: [Author!]! @relationship(type: "WROTE", direction: IN)
+	cover: String!
+	description: String!
+	isbn: String!
+	publish_date: String!
+	publishedByPublishers: [Publisher!]! @relationship(type: "PUBLISHED_BY", direction: OUT)
+	subtitle: String!
+	title: String!
+}
+
+type Publisher {
+	booksPublishedBy: [Book!]! @relationship(type: "PUBLISHED_BY", direction: IN)
+	name: String!
+}
+
+type Subject {
+	booksAboutSubject: [Book!]! @relationship(type: "ABOUT_SUBJECT", direction: IN)
+	name: String!
+}
