@@ -78,7 +78,13 @@ extend type Order
       { roles: ["admin"] }
     ]
   )
-extend type Customer @auth(rules: [{ where: { username: "$jwt.sub" } }])
+extend type Customer
+  @auth(
+    rules: [
+      { operations: [CREATE, UPDATE, DELETE], roles: ["admin"] }
+      { operations: [READ], where: { username: "$jwt.sub" } }
+    ]
+  )
 extend type Book
   @auth(
     rules: [{ operations: [CREATE, UPDATE, DELETE], roles: ["admin"] }]
