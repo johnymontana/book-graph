@@ -6,10 +6,10 @@ type Author {
 type Book {
 	aboutSubjectSubjects: [Subject!]! @relationship(type: "ABOUT_SUBJECT", direction: OUT)
 	authorsWrote: [Author!]! @relationship(type: "WROTE", direction: IN)
-	cover: String!
-	description: String!
+	cover: String
+	description: String
 	isbn: String!
-	publish_date: String!
+	publish_date: String
 	publishedByPublishers: [Publisher!]! @relationship(type: "PUBLISHED_BY", direction: OUT)
 	subtitle: String!
 	title: String!
