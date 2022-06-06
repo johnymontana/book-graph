@@ -1,0 +1,108 @@
+type Author {
+  name: String!
+  wroteBooks: [Book!]! @relationship(type: "WROTE", direction: OUT)
+}
+
+type Book {
+  aboutSubjectSubjects: [Subject!]!
+    @relationship(type: "ABOUT_SUBJECT", direction: OUT)
+  authorsWrote: [Author!]! @relationship(type: "WROTE", direction: IN)
+  cover: String
+  description: String
+  isbn: String!
+  publish_date: String
+  publishedByPublishers: [Publisher!]!
+    @relationship(type: "PUBLISHED_BY", direction: OUT)
+  subtitle: String!
+  title: String!
+  reviews: [Review!]! @relationship(type: "REVIEWS", direction: IN)
+}
+
+type Publisher {
+  booksPublishedBy: [Book!]!
+    @relationship(type: "PUBLISHED_BY", direction: IN)
+  name: String!
+}
+
+type Subject {
+  booksAboutSubject: [Book!]!
+    @relationship(type: "ABOUT_SUBJECT", direction: IN)
+  name: String!
+}
+
+type Order {
+  orderID: ID! @id
+  placedAt: DateTime @timestamp
+  shipTo: Address @relationship(type: "SHIPS_TO", direction: OUT)
+  customer: Customer @relationship(type: "PLACED", direction: IN)
+  books: [Book!]! @relationship(type: "CONTAINS", direction: OUT)
+}
+
+type Customer {
+  username: String
+  orders: [Order!]! @relationship(type: "PLACED", direction: OUT)
+  reviews: [Review!]! @relationship(type: "WROTE", direction: OUT)
+}
+
+type Address {
+  address: String
+  location: Point
+  orders: [Order!]! @relationship(type: "SHIPS_TO", direction: IN)
+}
+
+type Review {
+  rating: Int
+  text: String
+  createdAt: DateTime @timestamp
+  book: Book! @relationship(type: "REVIEWS", direction: OUT)
+  author: Customer! @relationship(type: "WROTE", direction: IN)
+}
+
+extend type Book {
+  similar: [Book]
+    @cypher(
+      statement: """
+      MATCH (this)-[:ABOUT_SUBJECT]->(s:Subject)<-[:ABOUT_SUBJECT]-(rec:Book)
+      WITH rec, COUNT(*) AS num
+      RETURN rec ORDER BY num DESC
+      """
+    )
+}
+
+# Authorization rules
+
+extend type Order
+  @auth(
+    rules: [
+      { allow: { customer: { username: "$jwt.sub" } } }
+      { roles: ["admin"] }
+    ]
+  )
+extend type Customer @auth(rules: [{ where: { username: "$jwt.sub" } }])
+extend type Book
+  @auth(
+    rules: [{ operations: [CREATE, UPDATE, DELETE], roles: ["admin"] }]
+  )
+extend type Review
+  @auth(
+    rules: [
+      {
+        operations: [CREATE, UPDATE]
+        bind: { author: { username: "$jwt.sub" } }
+      }
+    ]
+  )
+extend type Subject @auth(rules: [{ isAuthenticated: true }])
+
+type Query {
+  booksForCurrentUser: [Book]
+    @auth(rules: [{ isAuthenticated: true }])
+    @cypher(
+      statement: """
+      MATCH (c:Customer {username: $auth.jwt.sub})-[:PLACED]->(:Order)-[:CONTAINS]->(b:Book)
+      MATCH (b)-[:ABOUT_SUBJECT]->(s:Subject)<-[:ABOUT_SUBJECT]-(rec:Book)
+      WITH rec, COUNT(*) AS score ORDER BY score DESC
+      RETURN rec
+      """
+    )
+}
